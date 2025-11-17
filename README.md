@@ -43,7 +43,4 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser to expl
 - Using this free code publicly is **prohibited**.
 - Any violation will be considered **copyright infringement**, and I reserve the right to report it.
 
-### Premium Code
-- The premium code can be used publicly **only if proper credit is given**:  
-  `Website idea & code by @anujbuilds`  
-- Without credit or without explicit permission, public use is **not allowed**.
+
