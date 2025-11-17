@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import GradientButton from "@/components/GradientButton"; // adjust path
+import GradientButton from "@/components/GradientButton"; 
 import { Gift } from "lucide-react";
 
 const BalloonPop = ({ onNext }) => {
@@ -18,39 +18,41 @@ const BalloonPop = ({ onNext }) => {
 
   const allPopped = popped.every(Boolean);
 
+  const balloons = [
+    { left: 20, top: 18, color: "rgb(251, 113, 133)", height: 16 }, // height in % of container
+    { left: 40, top: 24, color: "rgb(245, 158, 11)", height: 16 },
+    { left: 60, top: 24, color: "rgb(34, 197, 94)", height: 16 },
+    { left: 80, top: 18, color: "rgb(56, 189, 248)", height: 16 },
+  ];
+
   return (
     <>
-      <div className="relative h-[68vh] md:h-[60vh] w-full overflow-visible rounded-3xl backdrop-blur-xl bg-gradient-to-b from-pink-950/35 via-fuchsia-950/30 to-purple-950/35 p-4">
+      <div className="relative h-[70vh] sm:h-[65vh] md:h-[60vh] w-full overflow-visible rounded-3xl backdrop-blur-xl bg-gradient-to-b from-pink-950/35 via-fuchsia-950/30 to-purple-950/35 p-4">
         {/* Instruction */}
-        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-pink-50/90 text-xl md:text-2xl">
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 text-lg sm:text-xl md:text-2xl text-pink-50/90">
           Pop all 4 balloons
         </div>
 
-        {/* Display words */}
+        {/* Words */}
         {words.map((word, i) => (
           <div
             key={i}
-            className="absolute text-xl md:text-2xl font-semibold pointer-events-none transition-opacity duration-500"
+            className="absolute font-semibold pointer-events-none transition-opacity duration-500"
             style={{
-              left: `${20 + i * 20}%`,
-              top: `${i % 2 === 0 ? 32 : 38}%`,
+              left: `${balloons[i].left}%`,
+              top: `${balloons[i].top + 12}%`,
               transform: "translateX(-50%)",
               opacity: popped[i] ? 1 : 0,
             }}
           >
-            <span className="text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-fuchsia-400 to-violet-400 drop-shadow">
+            <span className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-rose-400 via-fuchsia-400 to-violet-400 drop-shadow">
               {word}
             </span>
           </div>
         ))}
 
         {/* Balloons */}
-        {[
-          { left: 20, top: 18, color: "rgb(251, 113, 133)" },
-          { left: 40, top: 24, color: "rgb(245, 158, 11)" },
-          { left: 60, top: 24, color: "rgb(34, 197, 94)" },
-          { left: 80, top: 18, color: "rgb(56, 189, 248)" },
-        ].map((balloon, i) => (
+        {balloons.map((balloon, i) => (
           <button
             key={i}
             aria-label={`Balloon ${i + 1}`}
@@ -65,7 +67,7 @@ const BalloonPop = ({ onNext }) => {
           >
             <div className="relative">
               <div
-                className="h-24 w-20 md:h-28 md:w-22 rounded-[50%_50%_45%_45%/55%_55%_45%_45%]"
+                className="h-16 w-14 sm:h-20 sm:w-16 md:h-24 md:w-20 rounded-[50%_50%_45%_45%/55%_55%_45%_45%]"
                 style={{
                   background: `radial-gradient(60% 60% at 35% 35%, rgba(255,255,255,0.6) 0px, rgba(255,255,255,0.6) 26%, transparent 27%), linear-gradient(145deg, ${balloon.color}, rgba(255,255,255,0.3))`,
                   boxShadow:
@@ -73,7 +75,7 @@ const BalloonPop = ({ onNext }) => {
                 }}
               ></div>
               <div
-                className="mx-auto -mt-1 h-3 w-3 rotate-45 relative z-10"
+                className="mx-auto -mt-1 h-2 w-2 sm:h-3 sm:w-3 md:h-3 md:w-3 rotate-45 relative z-10"
                 style={{ background: balloon.color }}
               ></div>
             </div>
@@ -81,16 +83,29 @@ const BalloonPop = ({ onNext }) => {
         ))}
 
         {/* Balloon strings */}
-        <svg className="pointer-events-none absolute inset-0 -z-10" width="848" height="506">
-          <path d="M 169.6 205.15 C 162.65 285.15, 420.52 354.2, 424 506" stroke="rgba(255,255,255,0.75)" strokeWidth="1.4" fill="none" />
-          <path d="M 339.2 235.52 C 337.01 315.52, 422.91 354.2, 424 506" stroke="rgba(255,255,255,0.75)" strokeWidth="1.4" fill="none" />
-          <path d="M 508.8 235.52 C 513.39 315.52, 426.29 354.2, 424 506" stroke="rgba(255,255,255,0.75)" strokeWidth="1.4" fill="none" />
-          <path d="M 678.4 205.15 C 685.55 285.15, 427.57 354.2, 424 506" stroke="rgba(255,255,255,0.75)" strokeWidth="1.4" fill="none" />
-          <circle cx="424" cy="506" r="5" fill="rgba(255,255,255,0.75)" />
+        <svg
+          className="pointer-events-none absolute inset-0 -z-10 w-full h-full"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+        >
+          {balloons.map((balloon, i) => {
+            // Start string at bottom of balloon (top + balloon height)
+            const startY = balloon.top + (balloon.height * 1.5); // adjust 1.5 factor for visual alignment
+            return (
+              <path
+                key={i}
+                d={`M${balloon.left},${startY} C${balloon.left - 2},${startY + 10} 50,100 50,100`}
+                stroke="rgba(255,255,255,0.75)"
+                strokeWidth="0.5"
+                fill="none"
+              />
+            );
+          })}
+          <circle cx="50" cy="100" r="1.5" fill="rgba(255,255,255,0.75)" />
         </svg>
       </div>
 
-      {/* Next button outside balloon box */}
+      {/* Next button */}
       {allPopped && (
         <div className="mt-6 flex justify-center">
           <GradientButton onClick={onNext}>
