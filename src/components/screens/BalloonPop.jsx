@@ -5,7 +5,7 @@ import GradientButton from "@/components/GradientButton";
 import { Gift } from "lucide-react";
 
 const BalloonPop = ({ onNext }) => {
-  const words = ["You", "are", "a", "Cutiee"];
+  const words = ["You", "are", "my", "Bestie"];
   const [popped, setPopped] = useState([false, false, false, false]);
 
   const handlePop = (index) => {
