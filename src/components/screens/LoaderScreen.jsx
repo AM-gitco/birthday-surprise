@@ -9,7 +9,7 @@ import { motion } from "framer-motion"
 // - showAudioHint: boolean (default true) — whether to show the play-arrow hint
 // - autoplayBlocked: optional boolean — if provided, the hint will be shown only when autoplayBlocked === true
 export default function LoaderScreen({ onDone, showAudioHint = true, autoplayBlocked }) {
-    const [count, setCount] = useState(20)
+    const [count, setCount] = useState(10)
     const [hintDismissed, setHintDismissed] = useState(false)
 
     useEffect(() => {
